@@ -7,20 +7,32 @@
 {% block body %}
     {{ form_start(form) }}
     {{ form_end(form) }}
+    <div id="successModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success">
+                        Producto creado correctamente.
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <a href="{{ url('homepage') }}" class="btn btn-border btn-default">Entendido</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     <script>
         var $category = $('#appbundle_product_category');
         $category.parent('.form-group').after('<div id="foodProduct"></div>');
-        // When sport gets selected ...
         $category.change(function() {
-            // ... retrieve the corresponding form.
             var $form = $(this).closest('form');
-            // Simulate form data, but only include the selected sport value.
             var data = {};
             data[$category.attr('name')] = $category.val();
-            // Submit data via AJAX to the form's action path.
             $.ajax({
                 url : $form.attr('action'),
                 type: 'POST',
@@ -28,6 +40,21 @@
                 success: function(html) {
                     html = $(html).find('#appbundle_product_foodProduct');
                     $('#foodProduct').html(html);
+                }
+            });
+        });
+
+        $('form').submit(function(event) {
+            event.preventDefault();
+            var data = new FormData($("form")[0]);
+            $.ajax({
+                url : $(this).attr('action'),
+                type: 'POST',
+                data : data,
+                contentType: false,
+                processData: false,
+                success: function(html) {
+                    $('#successModal').modal('show');
                 }
             });
         });

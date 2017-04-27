@@ -17,4 +17,4 @@ Que Probar
   * Las imagenes se guardan en la carpeta /web/uploads (necesita permisos)
   * Al crear un nuevo producto, si la categoría es 'Alimentos', se despliega un formulario embebido (cargado con AJAX)
   el cual contiene fecha de elaboración y expiración.
-  
+  * Para ver detalle de un producto guardado, se debe hacer clic en el nombre.

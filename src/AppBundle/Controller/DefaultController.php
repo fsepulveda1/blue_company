@@ -44,6 +44,9 @@ class DefaultController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($product);
+                if(!empty($product->getFoodProduct())) {
+                    $em->persist($product->getFoodProduct()->setProduct($product));
+                }
                 $em->flush();
 
                 return new Response('Producto guardado correctamente');
@@ -54,5 +57,14 @@ class DefaultController extends Controller
         catch(\Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * @Route("/show_more", name="show_more")
+     */
+    public function showMoreAction(Request $request) {
+        $id = $request->get('id');
+        $product = $this->getDoctrine()->getRepository('AppBundle:Product')->find($id);
+        return $this->render('default/modal.information.html.twig', ['product' => $product]);
     }
 }

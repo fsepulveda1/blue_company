@@ -194,13 +194,6 @@ class Product
     {
         return $this->price;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set foodProduct

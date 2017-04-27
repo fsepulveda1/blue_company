@@ -1,0 +1,35 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <img class="img-responsive img-thumbnail" src="/uploads/{{ product.image }}">
+            <div class="form-group">
+                <label class="control-label">Nombre:</label>
+                <div class="">{{ product.name }}</div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Description:</label>
+                <div class="">{{ product.description }}</div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Categoría:</label>
+                <div class="">{{ product.category.name }}</div>
+            </div>
+            {% if product.foodProduct is not empty %}
+                <div class="form-group">
+                    <label class="control-label">Fecha de elaboración:</label>
+                    <div class="">{{ product.foodProduct.elaborationDate | date('d-m-Y') }}</div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de vencimiento:</label>
+                    <div class="">{{ product.foodProduct.expirationDate | date('d-m-Y') }}</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="modal-footer text-center">
+    <button type="button" class="btn btn-border btn-default" data-dismiss="modal">Entendido</button>
+</div>

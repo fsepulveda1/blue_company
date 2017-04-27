@@ -43,7 +43,10 @@ class ProductType extends AbstractType
         $formModifier = function (FormInterface $form, Category $category = null) {
             if($category){
                 if($category->getId() == 1) {
-                    $form->add('foodProduct', FoodProductType::class, ['label'=>'Información adicional del producto:']);
+                    $form->add('foodProduct', FoodProductType::class, [
+                        'label'=>'Información adicional del producto:',
+                        'by_reference' => false,
+                    ]);
                 }
             }
         };
