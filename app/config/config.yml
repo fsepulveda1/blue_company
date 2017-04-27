@@ -38,6 +38,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        url_img_product: "%url_img_product%"
 
 # Doctrine Configuration
 doctrine:

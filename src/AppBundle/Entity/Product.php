@@ -46,7 +46,7 @@ class Product
     /**
      * @var string
      * @Assert\NotBlank(message="Debes seleccionar una imagen.")
-     * @Assert\File(mimeTypes={ "application/img" })
+     * @Assert\File(mimeTypes={ "image/*" })
      * @ORM\Column(name="image", type="string", length=255)
      */
     private $image;

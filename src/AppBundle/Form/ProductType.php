@@ -33,7 +33,7 @@ class ProductType extends AbstractType
                     'placeholder' => 'Selecciona una categoría',
                     'required' => false
                 ])
-            ->add('save', SubmitType::class);
+            ->add('Guardar', SubmitType::class);
     }
     
     /**
