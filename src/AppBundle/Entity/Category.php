@@ -18,7 +18,6 @@ class Category
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -29,15 +28,20 @@ class Category
      */
     private $name;
 
-
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -64,4 +68,3 @@ class Category
         return $this->name;
     }
 }
-

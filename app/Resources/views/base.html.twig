@@ -1,40 +1,78 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            <style>
-                body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-                h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
-                h1 { font-size: 36px; }
-                h2 { font-size: 21px; margin-bottom: 1em; }
-                p { margin: 0 0 1em 0; }
-                a { color: #0000F0; }
-                a:hover { text-decoration: none; }
-                code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
-                #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-                #container { padding: 2em; }
-                #welcome, #status { margin-bottom: 2em; }
-                #welcome h1 span { display: block; font-size: 75%; }
-                #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
-                #icon-book { display: none; }
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-                @media (min-width: 768px) {
-                    #wrapper { width: 80%; margin: 2em auto; }
-                    #icon-book { display: inline-block; }
-                    #status a, #next a { display: block; }
+    <style>
+        html,body {
+            height:100%;
+        }
+        .container {
+            height:100%;
+        }
+        .main-row {
+            margin-left:0;
+            margin-right:0;
+        }
+        .fill {
+            width:100%;
+            height:100%;
+            min-height:100%;
+            padding:0px;
+        }
+        .sidebar
+        {
+            background: #F0F0F0;
+            height:100%;
+            min-height:100%;
+        }
+        .main-content-area
+        {
+            background: #fff;
+            background-position: 50% 50%; /* image centered on screen */
+            height:100%;
+            min-height:100%;
+            overflow: auto;
+        }
+    </style>
+    {% block stylesheets %}
+    {% endblock %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-                    @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-                    @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-                    .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
-                }
-            </style>
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+</head>
+<body>
+<div class="row main-row fill">
+    <div class="col-sm-2 sidebar hidden-xs">
+        <h3>Blue Company</h3>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="{{ url('homepage') }}">Productos</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-10 col-xs-12 main-content-area">
+        <h1 class="page-header">
+            {% block title_section %}{% endblock %}
+        </h1>
+        <p id="main-content">
+            {% block body %}{% endblock %}
+        </p>
+    </div>
+</div>
+
+{% block javascripts %}{% endblock %}
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
 </html>

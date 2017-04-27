@@ -59,6 +59,13 @@ class Product
     private $category;
 
     /**
+     *
+     * @Assert\Valid
+     * @ORM\OneToOne(targetEntity="FoodProduct", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $foodProduct;
+
+    /**
      * Get id
      *
      * @return int
@@ -186,5 +193,36 @@ class Product
     public function getPrice()
     {
         return $this->price;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set foodProduct
+     *
+     * @param \AppBundle\Entity\FoodProduct $foodProduct
+     *
+     * @return Product
+     */
+    public function setFoodProduct(\AppBundle\Entity\FoodProduct $foodProduct = null)
+    {
+        $this->foodProduct = $foodProduct;
+
+        return $this;
+    }
+
+    /**
+     * Get foodProduct
+     *
+     * @return \AppBundle\Entity\FoodProduct
+     */
+    public function getFoodProduct()
+    {
+        return $this->foodProduct;
     }
 }

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\Tag;
 use AppBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,8 +18,9 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig');
+        $em = $this->getDoctrine();
+        $products = $em->getRepository('AppBundle:Product')->findAll();
+        return $this->render('default/index.html.twig',['products'=>$products]);
     }
 
     /**
@@ -26,30 +28,31 @@ class DefaultController extends Controller
      */
     public function formProductAction(Request $request)
     {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class,$product);
-        $form->handleRequest($request);
+        try {
+            $product = new Product();
+            $form = $this->createForm(ProductType::class, $product);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $file = $product->getImage();
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
-        if($form->isSubmitted() && $form->isValid()) {
+                $file->move(
+                    $this->getParameter('url_img_product'),
+                    $fileName
+                );
+                $product->setImage($fileName);
 
-            $file = $product->getImage();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($product);
+                $em->flush();
 
-            $file->move(
-                $this->getParameter('url_img_product'),
-                $fileName
-            );
-
-            $product->setImage($fileName);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
-            $em->flush();
-
-            return new Response('Producto guardado correctamente');
+                return new Response('Producto guardado correctamente');
+            } else {
+                return $this->render('default/form_product.html.twig', ['form' => $form->createView()]);
+            }
         }
-        else {
-            return $this->render('default/form_product.html.twig',['form'=>$form->createView()]);
+        catch(\Exception $e) {
+            throw $e;
         }
     }
 }

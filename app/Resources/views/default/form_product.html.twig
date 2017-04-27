@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}
-    Formulario de Producto
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title_section %}
+    Nuevo Producto
 {% endblock %}
 
 {% block body %}
@@ -9,5 +9,29 @@
     {{ form_end(form) }}
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
+    <script>
+        var $category = $('#appbundle_product_category');
+        $category.parent('.form-group').after('<div id="foodProduct"></div>');
+        // When sport gets selected ...
+        $category.change(function() {
+            // ... retrieve the corresponding form.
+            var $form = $(this).closest('form');
+            // Simulate form data, but only include the selected sport value.
+            var data = {};
+            data[$category.attr('name')] = $category.val();
+            // Submit data via AJAX to the form's action path.
+            $.ajax({
+                url : $form.attr('action'),
+                type: 'POST',
+                data : data,
+                success: function(html) {
+                    html = $(html).find('#appbundle_product_foodProduct');
+                    $('#foodProduct').html(html);
+                }
+            });
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
 {% endblock %}

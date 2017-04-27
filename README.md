@@ -8,3 +8,13 @@ Como instalar
   * Utilizar composer para instalar depenedencias (composer update)
   * Correr comando de base de datos (php bin/console d:d:c, d:s:u --force, d:f:l)
   * Ejecutar php bin/console server:start e ingresar a la ruta que el comando proporciona.
+
+
+Que Probar 
+--------------
+  * La página inicial es un listado de productos.
+  * Los productos se almacenan en la base de datos
+  * Las imagenes se guardan en la carpeta /web/uploads (necesita permisos)
+  * Al crear un nuevo producto, si la categoría es 'Alimentos', se despliega un formulario embebido (cargado con AJAX)
+  el cual contiene fecha de elaboración y expiración.
+  
