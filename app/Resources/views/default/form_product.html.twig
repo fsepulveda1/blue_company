@@ -1,2 +1,13 @@
-{{ form_start(form) }}
-{{ form_end(form) }}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Formulario de Producto
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
