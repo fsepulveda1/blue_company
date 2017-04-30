@@ -46,7 +46,7 @@
             });
         });
 
-        $('form').submit(function(event) {
+        $('#formProduct').on('submit','form',function(event) {
             event.preventDefault();
             var data = new FormData($("form")[0]);
             $.ajax({
