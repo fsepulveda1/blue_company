@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_end(form) }}
+    <div id="formProduct">
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    </div>
     <div id="successModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -53,8 +55,17 @@
                 data : data,
                 contentType: false,
                 processData: false,
-                success: function(html) {
-                    $('#successModal').modal('show');
+                success: function(data, statusText, xhr) {
+                    if(xhr.status == 201) {
+                        $('#successModal').modal('show');
+                    }
+                    else {
+                        var htmlForm = $(data).find('#formProduct');
+                        $('#formProduct').html(htmlForm);
+                    }
+                },
+                error: function() {
+                    alert('ha ocurrido un error');
                 }
             });
         });

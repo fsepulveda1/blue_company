@@ -49,9 +49,9 @@ class DefaultController extends Controller
                 }
                 $em->flush();
 
-                return new Response('Producto guardado correctamente');
+                return new Response('Producto guardado correctamente',201);
             } else {
-                return $this->render('default/form_product.html.twig', ['form' => $form->createView()]);
+                return new Response($this->renderView('default/form_product.html.twig', ['form' => $form->createView()]),202);
             }
         }
         catch(\Exception $e) {

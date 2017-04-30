@@ -24,21 +24,23 @@ class Product
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Ingresa un nombre.")
+     * @Assert\Length(max=255,maxMessage="No puedes ingresar mas de 255 caracteres.")
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Ingresa una descripción.")
+     * @Assert\Length(max=255,maxMessage="No puedes ingresar mas de 255 caracteres.")
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
 
     /**
      * @var integer
-     *
+     * @Assert\NotBlank(message="Ingresa un precio.")
      * @ORM\Column(name="price", type="integer")
      */
     private $price;
