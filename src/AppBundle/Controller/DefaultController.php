@@ -127,6 +127,56 @@ class DefaultController extends Controller
     }
 
     private function validateCellsExcel($arrayData) {
+        foreach ($arrayData as $keyColumn=>$columnData) {
+            foreach($columnData as $keyRow => $cells) {
+                switch($keyRow) {
+                    case 0: //codigo tecnico
 
+                        break;
+                    case 1: //rut proveedor
+
+                        break;
+                    case 2: //numero contrato
+
+                        break;
+                    case 3: //fecha de inicio
+
+                        break;
+                    case 4: //fecha de termino
+
+                        break;
+                    case 5: //documentación compra
+
+                        break;
+                    case 6: //codigo sucursal
+
+                        break;
+                    case 7: //centro de costo
+
+                        break;
+                    case 8: //tipo de moneda
+
+                        break;
+                    case 9: //valor
+
+                        break;
+                    case 10: //SLA evaluador
+
+                        break;
+                    case 11: //SLA OC
+
+                        break;
+                    case 12: //SLA proveedor
+
+                        break;
+                    case 13: //SLA producto
+
+                        break;
+                    case 14: //SLA despacho
+
+                        break;
+                }
+            }
+        }
     }
 }
