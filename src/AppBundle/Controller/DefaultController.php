@@ -5,14 +5,25 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Tag;
+use AppBundle\Form\FileUploadType;
 use AppBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\DiExtraBundle\Annotation as DI;
+
 
 class DefaultController extends Controller
 {
+    /**
+     * @var string
+     * @DI\Inject("%kernel.cache_dir%")
+     */
+    public $cacheDir;
+
     /**
      * @Route("/", name="homepage")
      */
@@ -21,6 +32,49 @@ class DefaultController extends Controller
         $em = $this->getDoctrine();
         $products = $em->getRepository('AppBundle:Product')->findAll();
         return $this->render('default/index.html.twig',['products'=>$products]);
+    }
+
+    /**
+     * @Route("/validateXLS", name="validateXLS")
+     */
+    public function validateXLSAction(Request $request)
+    {
+        try {
+            $data = [];
+            $form = $this->createForm(FileUploadType::class,$data);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $data = $form->getData();
+
+                /** @var $file UploadedFile **/
+                $file = $data['file'];
+                $fileName = 'file_temp_contracts.'.$file->getClientOriginalExtension();
+                // Move the file to the directory where brochures are stored
+                $file->move(
+                    $this->cacheDir,
+                    $fileName
+                );
+
+                /** @var $excelFile \PHPExcel */
+                $excelFile = $this->get('phpExcel')->createPHPExcelObject($this->cacheDir.'/'.$fileName);
+                $worksheets = $excelFile->getWorksheetIterator();
+                foreach ($worksheets as $worksheet) {
+                    $lastColumn = $worksheet->getHighestDataColumn();
+                    foreach($worksheet->getRowIterator() as $rowIndex => $row) {
+                        $array = $worksheet->rangeToArray('A'.$rowIndex.':'.$lastColumn.$rowIndex,null,false,false,true);
+                        $errors[] = $this->validateCellsExcel($array);
+                    }
+                }
+                return new Response(1);
+
+            } else {
+                return new Response($this->renderView('default/form_file.html.twig', ['form' => $form->createView()]),202);
+            }
+        }
+        catch(\Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -66,5 +120,13 @@ class DefaultController extends Controller
         $id = $request->get('id');
         $product = $this->getDoctrine()->getRepository('AppBundle:Product')->find($id);
         return $this->render('default/modal.information.html.twig', ['product' => $product]);
+    }
+
+    private function validateHeaders($arrayHeader) {
+
+    }
+
+    private function validateCellsExcel($arrayData) {
+
     }
 }

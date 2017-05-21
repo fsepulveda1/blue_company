@@ -24,7 +24,11 @@
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.2.*",
         "twig/twig": "^1.0||^2.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "liuggio/excelbundle": "^2.0",
+        "phpoffice/phpexcel": "^1.8",
+        "jms/aop-bundle": "^1.2",
+        "jms/di-extra-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
